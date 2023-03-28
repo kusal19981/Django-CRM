@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+
+
+
+
+{% if user.is_authenticated %}
+
+<h1>Hello Home</h1>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <!-- <th scope="col">Phone</th> -->
+      <th scope="col">Address</th>
+      <th scope="col">City</th>
+      <!-- <th scope="col">state</th> -->
+      <th scope="col">zipcode</th>
+      <th scope="col">CreatedAt</th>
+      <th scope="col">ID</th>
+
+      
+    </tr>
+  </thead>
+  <tbody>
+</tbody>
+
+      {% if records %}
+            {% for record in records %}
+            <tr>
+              <td>{{ record.first_name }}
+              {{ record.last_name }}</td>
+              <td> {{ record.email }}</td>
+              <!-- <td>{{ record.phone }}</td> -->
+              <td>{{ record.city }}</td>
+              <td>{{ record.state }}</td>
+              <td>{{ record.zipcode }}</td>
+              <td>{{ record.created_at }}</td>
+              <td><a href="{% url 'record' record.id %}"> {{ record.id }}</td></a>
+            </tr>
+             {% endfor %}
+      {% endif %}
+
+{% else %}
+
+<h1>Login </h1>
+<br/>
+
+<form method="POST" action="{% url 'home' %}">
+
+    {% csrf_token %}
+    <form>
+        <div class="mb-3">
+          
+          <input type="text" name="username" placeholder="Username" class="form-control"  aria-describedby="emailHelp" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" name="password" placeholder=" password" required >
+        </div>
+        <br/>
+       
+        <button type="submit" class="btn btn-secondary">Login</button>
+      </form>
+
+</form>
+
+
+
+
+{% endif %}
+{% endblock %}
